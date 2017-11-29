@@ -89,7 +89,7 @@ public class Eight
 	{
 		Eight crazyEight = new Eight();
 		crazyEight.startGame();
-		crazyEight.showPlayersCards();
+		//crazyEight.showPlayersCards();
 		int turn = 0;
 		int winner = -1;
 		

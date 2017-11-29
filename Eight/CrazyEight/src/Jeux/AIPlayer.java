@@ -24,7 +24,7 @@ public class AIPlayer extends Player
 		int indexDiscardCard = -1;
 		
 		//afficher toutes les cartes jouables s'ils existent et leurs numeros correspondants dans le Handcard sinon piocher une carte
-		System.out.println("----------------------------Here are AI's playable cards----------------------------");
+		System.out.println("----------------------------AI's turn----------------------------");
 		while((playableCards.cardCollection.size()==0)&&(n>0))
 		{
 			for(int i=0;i<this.hand.cardCollection.size();i++)
@@ -33,7 +33,7 @@ public class AIPlayer extends Player
 				if((this.hand.cardCollection.get(i).getRank()==currentRank)||(this.hand.cardCollection.get(i).getSuit()==currentSuit))
 				{
 					playableCards.addCard(this.hand.cardCollection.get(i));
-					System.out.println(i+"--->"+this.hand.cardCollection.get(i).toString());
+					//System.out.println(i+"--->"+this.hand.cardCollection.get(i).toString());
 					indexDiscardCard = i;
 				}
 			}
@@ -46,7 +46,7 @@ public class AIPlayer extends Player
 				newCard = drawPile.cardCollection.get(0);
 				this.hand.addCard(newCard);
 				drawPile.removeCard(0);
-				System.out.println(newCard.toString());
+				//System.out.println(newCard.toString());
 				cardDrawn=1;
 			}
 			n--;
