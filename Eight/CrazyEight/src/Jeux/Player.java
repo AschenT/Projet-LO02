@@ -2,7 +2,7 @@ package Jeux;
 import java.util.*;
 public class Player implements GlobalInformation
 {
-	private String name;
+	protected String name;
 	private int playerID;
 	private boolean pass = false;
 	protected static int playerQuantitie;

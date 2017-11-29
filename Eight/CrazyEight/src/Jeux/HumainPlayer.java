@@ -11,7 +11,7 @@ public class HumainPlayer extends Player
 	public void playGame(CardCollection drawPile, CardCollection discardPile, int currentRank, int currentSuit)
 	{
 		int indexDiscardCard;
-		System.out.println("----------------------------Here's your hand cards----------------------------");
+		System.out.println("----------------------------Here's "+this.name+"'s hand cards----------------------------");
 		this.hand.showCardCollection();
 		System.out.println("Current Rank:");
 		System.out.println(GlobalInformation.ranks[currentRank]);
@@ -19,7 +19,7 @@ public class HumainPlayer extends Player
 		System.out.println(GlobalInformation.suits[currentSuit]);
 		
 		//afficher toutes les cartes jouables s'ils existent et leurs numeros correspondants dans le Handcard sinon piocher une carte
-		System.out.println("----------------------------Here are your playable cards----------------------------");
+		System.out.println("----------------------------Here are "+this.name+"'s playable cards----------------------------");
 		CardCollection playableCards = new CardCollection();
 		
 		int n=3;

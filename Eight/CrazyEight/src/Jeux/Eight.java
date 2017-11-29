@@ -106,7 +106,8 @@ public class Eight
 					if(crazyEight.playerList.get(turn).hand.cardCollection.size()==0)
 					{
 						winner = turn;
-						System.out.println("Game over, winner is "+crazyEight.playerList.get(winner).toString());
+						System.out.println("The game is over, winner is "+crazyEight.playerList.get(winner).toString()+"!");
+						break;
 					}
 				}
 				else 
