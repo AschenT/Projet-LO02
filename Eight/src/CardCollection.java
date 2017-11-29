@@ -32,7 +32,7 @@ public class CardCollection
 		
 		for(int i=0;i<this.cardCollection.size();i++)
 		{
-			System.out.println(this.cardCollection.get(i).toString());
+			System.out.println(i+"--->"+this.cardCollection.get(i).toString());
 			
 		}		
 	}
@@ -47,12 +47,59 @@ public class CardCollection
 		this.cardCollection.remove(index);
 	}
 	
+	
+	public int findSuitLike(int suit)
+	{
+		int firstCardFound = -1;
+		
+		for(int i=0;i<this.cardCollection.size();i++)
+		{
+			if((this.cardCollection.get(i).getSuit()==suit)&&(firstCardFound == -1))
+			{
+				firstCardFound = i;
+			}
+		}
+		
+		
+		return firstCardFound;
+	}
+	public int findRankLike(int rank)
+	{
+		int firstCardFound = -1;
+		
+		for(int i=0;i<this.cardCollection.size();i++)
+		{
+			if((this.cardCollection.get(i).getRank()==rank)&&(firstCardFound == -1))
+			{
+				firstCardFound = i;
+			}
+		}
+		
+		return firstCardFound;
+
+	}
+	
 //	public static void main(String arg[])
 //	{
 //		CardCollection newCardCollection = new CardCollection();
+//		CardCollection newCardCollection2 = new CardCollection();
+//		
 //		newCardCollection.newSet();
 //		newCardCollection.shuffle();
-////		newCardCollection.showCardCollection();
+//		System.out.println("first");
+//		newCardCollection.showCardCollection();
+//		newCardCollection2.cardCollection.addAll(newCardCollection.cardCollection);
+//		System.out.println("seconde");
+//		newCardCollection2.showCardCollection();
+////		int firstCard = -1;
+////		firstCard = newCardCollection.findRankLike(3);
+////		System.out.println(firstCard);
+////		int rank;
+////		int suit;
+////		suit = newCardCollection.cardCollection.get(0).getSuit();
+////		rank = newCardCollection.cardCollection.get(0).getRank();
+////		System.out.println(rank);
+////		System.out.println(suit);
 //		
 //	}
 }

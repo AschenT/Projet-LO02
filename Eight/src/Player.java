@@ -1,9 +1,10 @@
 package Jeux;
 import java.util.*;
-public class Player 
+public class Player implements GlobalInformation
 {
 	private String name;
 	private int playerID;
+	private boolean pass = false;
 	protected static int playerQuantitie;
 	protected CardCollection hand;
 	
@@ -50,11 +51,25 @@ public class Player
 	{
 		return this.playerID;
 	}
-	
+	public void playGame(CardCollection drawPile, CardCollection discardPile, int currentRank, int currentSuit)
+	{
+		
+	}
 	public String toString()
 	{
 		return this.name;
 	}
+	
+	public boolean getPass()
+	{
+		return this.pass;
+	}
+	
+	public void ackPass()
+	{
+		this.pass = false;
+	}
+	
 	//tester la focntionnement de classe Player
 //	public static void main(String arg[])
 //	{
