@@ -19,7 +19,7 @@ public class AIPlayer extends Player
 	{
 		CardCollection playableCards = new CardCollection();
 		
-		int n=4;
+		int n=1;
 		int cardDrawn=0;
 		int indexDiscardCard = -1;
 		
@@ -38,7 +38,7 @@ public class AIPlayer extends Player
 				}
 			}
 			//S'il y a pas de carte jouables, il faut piocher une carte 
-			if((playableCards.cardCollection.size()==0)&&(n>1))
+			if((playableCards.cardCollection.size()==0)&&(n>0))
 			{
 				System.out.println("----------------------------AI don't have any playable cards, AI drawed one card----------------------------");
 				Card newCard = new Card();
@@ -55,7 +55,7 @@ public class AIPlayer extends Player
 		//Si le joueur n'a pas de carte jouables apres 3 fois de piocher,
 		if(playableCards.cardCollection.size()==0)
 		{
-			System.out.println("----------------------------AI still don't have any playable cards----------------------------");
+			//System.out.println("----------------------------AI still don't have any playable cards----------------------------");
 			System.out.println("----------------------------Pass----------------------------");
 			this.pass = true;
 		}

@@ -22,7 +22,7 @@ public class HumainPlayer extends Player
 		System.out.println("----------------------------Here are "+this.name+"'s playable cards----------------------------");
 		CardCollection playableCards = new CardCollection();
 		
-		int n=3;
+		int n=1;
 		int cardDrawn=0;
 		while((playableCards.cardCollection.size()==0)&&(n>0))
 		{
@@ -53,15 +53,15 @@ public class HumainPlayer extends Player
 		//Si le joueur n'a pas de carte jouables apres 3 fois de piocher,
 		if(playableCards.cardCollection.size()==0)
 		{
-			System.out.println("You still don't have any playable cards");
+			//System.out.println("You still don't have any playable cards");
 			System.out.println("Pass");
 			this.pass = true;
 		}
 		else 
 		{		
-			System.out.println("Type the number of the card that you want to discard in handcard list, end by;");
+			System.out.println("Type the number of the card that you want to discard in handcard list"/*, end by;"*/);
 			Scanner sc =new Scanner(System.in);
-			sc.useDelimiter(";");
+//			sc.useDelimiter(";");
 			indexDiscardCard = sc.nextInt();
 			//verifier la carte choisie par le joueur humain est compatible et jeter la carte si possible
 			if((this.hand.cardCollection.get(indexDiscardCard).getRank()==currentRank)||(this.hand.cardCollection.get(indexDiscardCard).getSuit()==currentSuit))

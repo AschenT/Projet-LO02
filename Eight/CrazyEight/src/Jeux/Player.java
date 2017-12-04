@@ -12,9 +12,9 @@ public class Player implements GlobalInformation
 	{
 		playerQuantitie++;
 		this.playerID = this.playerQuantitie;
-		System.out.println("Type your name and end with ;");
+		System.out.println("Type your name"/* and end with ;"*/);
 		Scanner sc = new Scanner(System.in);
-		sc.useDelimiter(";");
+//		sc.useDelimiter(";");
 		this.name = sc.next();
 		
 		this.hand = new CardCollection();

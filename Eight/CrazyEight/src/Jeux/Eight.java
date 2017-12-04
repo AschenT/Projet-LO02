@@ -16,8 +16,8 @@ public class Eight
 		this.playerList = new <Player> ArrayList();
 		Scanner sc = new Scanner(System.in);
 		//Instancier les joueurs humains
-		System.out.println("How many people play against computer? Tape a number terminate with ; and press enter");
-		sc.useDelimiter(";");
+		System.out.println("How many people play against computer?"/* Tape a number terminate with ; and press enter"*/);
+		//sc.useDelimiter(";");
 		this.playerQuantitie = sc.nextInt();
 		for(int i=0;i<this.playerQuantitie;i++)
 		{
