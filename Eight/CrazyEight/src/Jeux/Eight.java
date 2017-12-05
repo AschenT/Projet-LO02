@@ -1,158 +1,274 @@
 package Jeux;
+
 import java.util.*;
-public class Eight 
-{
+
+public class Eight {
 	private int playerQuantitie;
 	private CardCollection drawPile;
 	private CardCollection discardPile;
 
 	private static int currentRank;
 	private static int currentSuit;
-	private List <Player> playerList;
-	
-	public Eight()
-	{
-		//initialisation des joueurs, enregistres dans playerList afin de mieux controler le jeux
-		this.playerList = new <Player> ArrayList();
+	private List<Player> playerList;
+	private int turn;
+	private int winner;
+	private static Variation selectedVariation;
+
+	public Eight() {
+		// initialisation des joueurs, enregistres dans playerList afin de mieux
+		// controler le jeux
+		this.playerList = new <Player>ArrayList();
 		Scanner sc = new Scanner(System.in);
-		//Instancier les joueurs humains
-		System.out.println("How many people play against computer?"/* Tape a number terminate with ; and press enter"*/);
-		//sc.useDelimiter(";");
+		// Instancier les joueurs humains
+		System.out
+				.println("How many people play against computer?"/* Tape a number terminate with ; and press enter" */);
+		// sc.useDelimiter(";");
 		this.playerQuantitie = sc.nextInt();
-		for(int i=0;i<this.playerQuantitie;i++)
-		{
+		for (int i = 0; i < this.playerQuantitie; i++) {
 			HumainPlayer newHumainPlayer = new HumainPlayer();
 			this.playerList.add(newHumainPlayer);
 		}
-		//instancier un joueur AI
-		AIPlayer aiPlayer = new AIPlayer();	
+		// instancier un joueur AI
+		AIPlayer aiPlayer = new AIPlayer();
 		this.playerList.add(aiPlayer);
-		
-		
-		this.drawPile = new CardCollection(); 
+
+		this.drawPile = new CardCollection();
 		this.discardPile = new CardCollection();
-		
-		
+
 	}
+
 	/*
 	 * Le debut du jeux. L'arbitre initialise les cartes, distribuer les cartes
 	 */
-	public void startGame()
-	{
-		//initialiser une nouvelle collection des 52 cartes et melanger 
+	public void startGame() {
+		// initialiser une nouvelle collection des 52 cartes et melanger
 		this.drawPile.newSet();
 		this.drawPile.shuffle();
-		
-		//afficher drawPile
-//		System.out.println("-------------------------------DrawPile:-------------------------------");
-//		this.drawPile.showCardCollection();
-		
-		//distribution des cartes
-	for(int id=0;id<this.playerQuantitie+1;id++)
-		{
-			  for(int nb_cards=0;nb_cards<8;nb_cards++)////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		// afficher drawPile
+		// System.out.println("-------------------------------DrawPile:-------------------------------");
+		// this.drawPile.showCardCollection();
+
+		// distribution des cartes
+		for (int id = 0; id < this.playerQuantitie + 1; id++) {
+			for (int nb_cards = 0; nb_cards < 8; nb_cards++)////////////////////////////////////////////////////////////////////////////////////////////////////////
 			{
 				Card newCard = new Card();
-				//newCard = this.drawPile.cardCollection.get(nb_cards);//on distribue toujours la premiere carte de drawPile
+				// newCard = this.drawPile.cardCollection.get(nb_cards);//on distribue toujours
+				// la premiere carte de drawPile
 				newCard = this.drawPile.cardCollection.get(0);
 				this.playerList.get(id).hand.addCard(newCard);
 				this.drawPile.removeCard(0);
 			}
 		}
-		//drawPile apres distribution
-//		System.out.println("-------------------------------DrawPile after dealing:-------------------------------");
-//		this.drawPile.showCardCollection();
-		
-		//mettre la premiere carte du drawPile dans le discardPile qui vient d'etre jetee
+		// drawPile apres distribution
+		// System.out.println("-------------------------------DrawPile after
+		// dealing:-------------------------------");
+		// this.drawPile.showCardCollection();
+
+		// mettre la premiere carte du drawPile dans le discardPile qui vient d'etre
+		// jetee
 		Card firstCard = new Card();
 		firstCard = this.drawPile.cardCollection.get(0);
 		this.drawPile.cardCollection.remove(0);
 		this.discardPile.cardCollection.add(firstCard);
 		this.currentRank = firstCard.getRank();
-		this.currentSuit = firstCard.getSuit();
+		this.setCurrentSuit(firstCard.getSuit());
 	}
-	
+
+	/*
+	 * Saute le tour du prochain joueur
+	 */
+	public void skipNextPlayerTurn() {
+		this.turn++;
+	}
+
 	/*
 	 * Afficher tous les joueurs et leurs cartes y compris AI
 	 */
-	public void showPlayersCards()
-	{
-		for(int i=0;i<this.playerQuantitie+1;i++)
-		{
-			System.out.println("----------------------------"+this.playerList.get(i).toString()+"----------------------------");
+	public void showPlayersCards() {
+		for (int i = 0; i < this.playerQuantitie + 1; i++) {
+			System.out.println("----------------------------" + this.playerList.get(i).toString()
+					+ "----------------------------");
 			this.playerList.get(i).hand.showCardCollection();
 		}
-		
+
 	}
-	
-	public static void main(String arg[])
-	{
+
+	public static void main(String arg[]) {
 		Eight crazyEight = new Eight();
 		crazyEight.startGame();
-		//crazyEight.showPlayersCards();
-		int turn = 0;
-		int winner = -1;
-		
-		while(winner==-1)
-		{
-			for(turn=0;turn<crazyEight.playerList.size();turn++)
-			{
-				if(crazyEight.drawPile.cardCollection.size()>=5)
-				{
-					crazyEight.playerList.get(turn).playGame(crazyEight.drawPile, crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
-					
-					crazyEight.currentRank = crazyEight.discardPile.cardCollection.get(crazyEight.discardPile.cardCollection.size()-1).getRank();
-					crazyEight.currentSuit = crazyEight.discardPile.cardCollection.get(crazyEight.discardPile.cardCollection.size()-1).getSuit();
-					if(crazyEight.playerList.get(turn).hand.cardCollection.size()==0)
-					{
-						winner = turn;
-						System.out.println("The game is over, winner is "+crazyEight.playerList.get(winner).toString()+"!");
-						break;
+		// crazyEight.showPlayersCards();
+		crazyEight.turn = 0;
+		crazyEight.winner = -1;
+		int p;
+
+		while (crazyEight.winner == -1) {
+			for (crazyEight.turn = 0; crazyEight.turn < crazyEight.playerList.size(); crazyEight.turn++) {
+				if (crazyEight.drawPile.cardCollection.size() >= 5) {
+					crazyEight.playerList.get(crazyEight.turn).playGame(crazyEight.drawPile, crazyEight.discardPile,
+							crazyEight.currentRank, crazyEight.getCurrentSuit());
+					if (crazyEight.currentRank != crazyEight.discardPile.cardCollection
+							.get(crazyEight.discardPile.cardCollection.size() - 1).getRank()
+							|| crazyEight.currentSuit != crazyEight.discardPile.cardCollection
+									.get(crazyEight.discardPile.cardCollection.size() - 1).getSuit()) {
+						crazyEight.currentRank = crazyEight.discardPile.cardCollection
+								.get(crazyEight.discardPile.cardCollection.size() - 1).getRank();
+						crazyEight.setCurrentSuit(crazyEight.discardPile.cardCollection
+								.get(crazyEight.discardPile.cardCollection.size() - 1).getSuit());
+						if (crazyEight.playerList.get(crazyEight.turn).hand.cardCollection.size() == 0) {
+							crazyEight.winner = crazyEight.turn;
+							System.out.println("The game is over, winner is "
+									+ crazyEight.playerList.get(crazyEight.winner).toString() + "!");
+							break;
+						} else {
+
+							Card playedCard = new Card(getCurrentSuit(), currentRank);
+							crazyEight.activateEffect(playedCard);
+
+						}
 					}
-				}
-				else 
-				{
+				} else {
 					System.out.println("----------------------------No more card----------------------------");
 					crazyEight.drawPile.cardCollection.addAll(crazyEight.discardPile.cardCollection);
 					crazyEight.discardPile.cardCollection.clear();
 					Card newCard = new Card();
-					newCard = crazyEight.drawPile.cardCollection.get(crazyEight.drawPile.cardCollection.size()-1);
+					newCard = crazyEight.drawPile.cardCollection.get(crazyEight.drawPile.cardCollection.size() - 1);
 					crazyEight.discardPile.cardCollection.add(newCard);
-					crazyEight.drawPile.removeCard(crazyEight.drawPile.cardCollection.size()-1);
-					turn--;
+					crazyEight.drawPile.removeCard(crazyEight.drawPile.cardCollection.size() - 1);
+					crazyEight.turn--;
 				}
-				
+				System.out.println(crazyEight.playerList);
+				System.out.println(crazyEight.turn);
+
 			}
-			turn = 0;
+			crazyEight.turn = 0;
 		}
-		
-		
-		
-		
-		
-//		crazyEight.playerList.get(1).playGame(crazyEight.drawPile, crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
-//		System.out.println("-------------------------------DicardPile -------------------------------");
-//		crazyEight.discardPile.showCardCollection();
-		
-		
-//		while((crazyEight.playerList.get(1).hand.cardCollection.size()!=0)&&(crazyEight.playerList.get(1).getPass()==false))
-//		{
-//			
-//		//	crazyEight.playerList.get(0).playGame(crazyEight.drawPile, crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
-//			crazyEight.playerList.get(1).playGame(crazyEight.drawPile, crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
-//			System.out.println("-------------------------------DicardPile -------------------------------");
-//			crazyEight.discardPile.showCardCollection();
-//			System.out.println("-------------------------------DrawPile -------------------------------");
-//			crazyEight.drawPile.showCardCollection();
-//			//Mettre a jour le currentSuit et currentRank
-//			crazyEight.currentRank = crazyEight.discardPile.cardCollection.get(crazyEight.discardPile.cardCollection.size()-1).getRank();
-//			crazyEight.currentSuit = crazyEight.discardPile.cardCollection.get(crazyEight.discardPile.cardCollection.size()-1).getSuit();
-//		}
-//		crazyEight.playerList.get(0).playGame(crazyEight.drawPile, crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
-//		System.out.println("-------------------------------DicardPile -------------------------------");
-//		crazyEight.discardPile.showCardCollection();
-//		System.out.println("-------------------------------DrawPile -------------------------------");
-//		crazyEight.drawPile.showCardCollection();
-		
+
+		// crazyEight.playerList.get(1).playGame(crazyEight.drawPile,
+		// crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
+		// System.out.println("-------------------------------DicardPile
+		// -------------------------------");
+		// crazyEight.discardPile.showCardCollection();
+
+		// while((crazyEight.playerList.get(1).hand.cardCollection.size()!=0)&&(crazyEight.playerList.get(1).getPass()==false))
+		// {
+		//
+		// // crazyEight.playerList.get(0).playGame(crazyEight.drawPile,
+		// crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
+		// crazyEight.playerList.get(1).playGame(crazyEight.drawPile,
+		// crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
+		// System.out.println("-------------------------------DicardPile
+		// -------------------------------");
+		// crazyEight.discardPile.showCardCollection();
+		// System.out.println("-------------------------------DrawPile
+		// -------------------------------");
+		// crazyEight.drawPile.showCardCollection();
+		// //Mettre a jour le currentSuit et currentRank
+		// crazyEight.currentRank =
+		// crazyEight.discardPile.cardCollection.get(crazyEight.discardPile.cardCollection.size()-1).getRank();
+		// crazyEight.currentSuit =
+		// crazyEight.discardPile.cardCollection.get(crazyEight.discardPile.cardCollection.size()-1).getSuit();
+		// }
+		// crazyEight.playerList.get(0).playGame(crazyEight.drawPile,
+		// crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);
+		// System.out.println("-------------------------------DicardPile
+		// -------------------------------");
+		// crazyEight.discardPile.showCardCollection();
+		// System.out.println("-------------------------------DrawPile
+		// -------------------------------");
+		// crazyEight.drawPile.showCardCollection();
+
+	}
+
+	public int getIndexOfAI() {
+		int k = 0;
+		for (int i = 0; i < playerList.size(); i++) {
+			if (playerList.get(i).name == "ai")
+				k = i;
+		}
+		return k;
+	}
+
+	public static int getCurrentSuit() {
+		return currentSuit;
+	}
+
+	public static void setCurrentSuit(int currentSuit) {
+		Eight.currentSuit = currentSuit;
+	}
+
+	public void activateEffect(Card playedCard) {
+		switch (playedCard.getRank()) {
+		case 1:
+			for (int i = 0; i < 4; i++) {
+				if (turn == playerList.size()-1) {
+					Card newCard = new Card();
+					newCard = drawPile.cardCollection.get(0);
+					playerList.get(0).hand.addCard(newCard);
+					drawPile.removeCard(0);
+				} else {
+					Card newCard = new Card();
+					newCard = drawPile.cardCollection.get(0);
+					playerList.get(turn + 1).hand.addCard(newCard);
+					drawPile.removeCard(0);
+				}
+			}
+			break;
+		case 11:
+			Collections.reverse(playerList);
+			turn=playerList.size()-turn-1;
+			break;
+		case 10:
+			turn--;
+			break;
+		case 8:
+			if (turn == getIndexOfAI()) {
+				Random r = new Random();
+				int valeur = 1 + r.nextInt(4);
+				Eight.setCurrentSuit(valeur);
+			} else {
+				System.out.println("Type the number matching the suit you want");
+				System.out.println("1---------->clubs");
+				System.out.println("2---------->spades");
+				System.out.println("3---------->diamonds");
+				System.out.println("4---------->hearts");
+				Scanner sc = new Scanner(System.in);
+				Eight.setCurrentSuit(sc.nextInt());
+				break;
+			}
+		case 7:
+			if (turn == playerList.size()-1) {
+				turn = 0;
+			} else {
+				turn++;
+			}
+			;
+			break;
+		case 5:
+			if (turn == getIndexOfAI()) {
+				Random r1 = new Random();
+				int resultat = r1.nextInt(playerList.size());
+				Card newCard = new Card();
+				newCard = drawPile.cardCollection.get(0);
+				playerList.get(resultat).hand.addCard(newCard);
+				drawPile.removeCard(0);
+				break;
+			} else {
+				System.out.println("Type the number matching the player you want to draw a card");
+				for (int i = 0; i < playerList.size(); i++) {
+					System.out.println(i + "---------->" + playerList.get(i).name);
+				}
+				Scanner sc1 = new Scanner(System.in);
+
+				Card newCard = new Card();
+				newCard = drawPile.cardCollection.get(0);
+				playerList.get(sc1.nextInt()).hand.addCard(newCard);
+				drawPile.removeCard(0);
+				break;
+			}
+		default:
+			break;
+		}
 	}
 }
