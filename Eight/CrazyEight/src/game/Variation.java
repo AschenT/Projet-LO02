@@ -1,5 +1,9 @@
-package Jeux;
+package game;
 import java.util.*;
+
+import card.Card;
+import card.CardCollection;
+import player.Player;
 public class Variation {
 	private int variation;
 	// Active l'effet de la carte jouée.
@@ -10,8 +14,8 @@ public class Variation {
 			  for(int i=0; i<4; i++) 
 			  {
 				Card newCard = new Card();	  
-			 	newCard = drawPile.cardCollection.get(0);
-			 	playerList.get(turn+1).hand.addCard(newCard);
+			 	newCard = drawPile.getCardCollection().get(0);
+			 	playerList.get(turn+1).getHand().addCard(newCard);
 			 	drawPile.removeCard(0);
 			  }
 		    break;  
@@ -42,13 +46,13 @@ public class Variation {
 		  case 5:
 			  System.out.println("Type the number matching the player you want to draw a card");
 			  for(int i=0; i<playerList.size(); i++) {
-				  System.out.println(i+"---------->"+playerList.get(i).name);
+				  System.out.println(i+"---------->"+playerList.get(i).getName());
 			  }
 			  Scanner sc1 = new Scanner(System.in);
 			  
 			  Card newCard = new Card();	  
-			  newCard = drawPile.cardCollection.get(0);
-			  playerList.get(sc1.nextInt()).hand.addCard(newCard);
+			  newCard = drawPile.getCardCollection().get(0);
+			  playerList.get(sc1.nextInt()).getHand().addCard(newCard);
 			  drawPile.removeCard(0);
 			    break;
 		  default:

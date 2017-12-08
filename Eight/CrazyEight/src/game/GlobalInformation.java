@@ -1,4 +1,4 @@
-package Jeux;
+package game;
 
 public interface GlobalInformation 
 {
