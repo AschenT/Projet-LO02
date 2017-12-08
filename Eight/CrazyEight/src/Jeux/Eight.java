@@ -2,7 +2,7 @@ package Jeux;
 
 import java.util.*;
 
-public class Eight {
+public class Eight implements GlobalInformation {
 	private int playerQuantitie;
 	private CardCollection drawPile;
 	private CardCollection discardPile;
@@ -138,8 +138,8 @@ public class Eight {
 					crazyEight.drawPile.removeCard(crazyEight.drawPile.cardCollection.size() - 1);
 					crazyEight.turn--;
 				}
-				System.out.println(crazyEight.playerList);
-				System.out.println(crazyEight.turn);
+//				System.out.println(crazyEight.playerList);
+//				System.out.println(crazyEight.turn);
 
 			}
 			crazyEight.turn = 0;
@@ -198,28 +198,35 @@ public class Eight {
 		Eight.currentSuit = currentSuit;
 	}
 
-	public void activateEffect(Card playedCard) {
+	public void activateEffect(Card playedCard)  {
 		switch (playedCard.getRank()) {
 		case 1:
-			for (int i = 0; i < 4; i++) {
 				if (turn == playerList.size()-1) {
-					Card newCard = new Card();
-					newCard = drawPile.cardCollection.get(0);
-					playerList.get(0).hand.addCard(newCard);
-					drawPile.removeCard(0);
+					for (int i = 0; i < 4; i++) {
+						Card newCard = new Card();
+						newCard = drawPile.cardCollection.get(0);
+						playerList.get(0).hand.addCard(newCard);
+						drawPile.removeCard(0);
+					}
+					System.out.println("Player "+ playerList.get(0) + " drawed four cards.");
 				} else {
+					for (int i = 0; i < 4; i++) {
 					Card newCard = new Card();
 					newCard = drawPile.cardCollection.get(0);
 					playerList.get(turn + 1).hand.addCard(newCard);
 					drawPile.removeCard(0);
+					}
+					System.out.println("Player "+ playerList.get(turn+1) + " drawed four cards.");
+					
 				}
-			}
 			break;
 		case 11:
 			Collections.reverse(playerList);
 			turn=playerList.size()-turn-1;
+			System.out.println("The direction of play has been reverted.");
 			break;
 		case 10:
+			System.out.println("Player "+ playerList.get(turn) + " get another turn.");
 			turn--;
 			break;
 		case 8:
@@ -227,6 +234,7 @@ public class Eight {
 				Random r = new Random();
 				int valeur = 1 + r.nextInt(4);
 				Eight.setCurrentSuit(valeur);
+				System.out.println("The suit is now " + Eight.getCurrentSuit() + ".");
 			} else {
 				System.out.println("Type the number matching the suit you want");
 				System.out.println("1---------->clubs");
@@ -235,12 +243,18 @@ public class Eight {
 				System.out.println("4---------->hearts");
 				Scanner sc = new Scanner(System.in);
 				Eight.setCurrentSuit(sc.nextInt());
+				System.out.println("The suit is now " + GlobalInformation.suits[Eight.getCurrentSuit()] + ".");
 				break;
 			}
 		case 7:
 			if (turn == playerList.size()-1) {
 				turn = 0;
+				System.out.println(playerList.get(0) + "'s turn has been skipped. It is the turn of player "+playerList.get(1)+".");
+			} else if(turn == playerList.size()-2){
+				System.out.println(playerList.get(playerList.size()-1) + "'s turn has been skipped. It is the turn of player "+playerList.get(0)+".");
+				turn = playerList.size()+1;
 			} else {
+				System.out.println(playerList.get(turn+1) + "'s turn has been skipped. It is the turn of player "+playerList.get(turn+2)+".");
 				turn++;
 			}
 			;
@@ -253,6 +267,7 @@ public class Eight {
 				newCard = drawPile.cardCollection.get(0);
 				playerList.get(resultat).hand.addCard(newCard);
 				drawPile.removeCard(0);
+				System.out.println("Player "+ playerList.get(resultat) + " drawed one cards.");
 				break;
 			} else {
 				System.out.println("Type the number matching the player you want to draw a card");
@@ -265,6 +280,7 @@ public class Eight {
 				newCard = drawPile.cardCollection.get(0);
 				playerList.get(sc1.nextInt()).hand.addCard(newCard);
 				drawPile.removeCard(0);
+				System.out.println("Player "+ playerList.get(sc1.nextInt()) + " drawed one cards.");
 				break;
 			}
 		default:
