@@ -7,37 +7,36 @@ import card.CardCollection;
 
 public class Main {
 	public static void main(String arg[]) {
-		Interface view = new Interface();
-		view.getFrame().setVisible(true);
-		Eight crazyEight = new Eight();
-		MenuControleur controleur = new MenuControleur(view,crazyEight);
-		crazyEight.startGame();
-		// crazyEight.showPlayersCards();
-		crazyEight.setTurn(0);
-		crazyEight.setWinner(-1);
-		int p;
+		MenuControleur controleur = new MenuControleur();
 
-		while (crazyEight.getWinner() == -1) {
-			for (crazyEight.setTurn(0); crazyEight.getTurn() < crazyEight.getPlayerList().size(); crazyEight.turn++) {
-				if (crazyEight.getDrawPile().getCardCollection().size() >= 5) {
-					crazyEight.getPlayerList().get(crazyEight.turn).playGame(crazyEight.getDrawPile(), crazyEight.getDiscardPile(),
-							crazyEight.getCurrentRank(), crazyEight.getCurrentSuit());
+		//Eight crazyEight = new Eight();
+
+		//view.crazyEight.startGame();
+		// crazyEight.showPlayersCards();
+		//view.crazyEight.setTurn(0);
+		//view.crazyEight.setWinner(-1);
+
+		/*while (view.crazyEight.getWinner() == -1) {
+			for (view.crazyEight.setTurn(0); view.crazyEight.getTurn() < view.crazyEight.getPlayerList().size(); view.crazyEight.turn++) {
+				if (view.crazyEight.getDrawPile().getCardCollection().size() >= 5) {
+					view.crazyEight.getPlayerList().get(view.crazyEight.turn).playGame(view.crazyEight.getDrawPile(), view.crazyEight.getDiscardPile(),
+							view.crazyEight.getCurrentRank(), view.crazyEight.getCurrentSuit());
 					
-					if (crazyEight.getPlayerList().get(crazyEight.turn).getPlayableCards().getCardCollection().size()!=0) {
-						crazyEight.setCurrentRank(crazyEight.getDiscardPile().getCardCollection()
-								.get(crazyEight.getDiscardPile().getCardCollection().size() - 1).getRank());
-						crazyEight.setCurrentSuit(crazyEight.getDiscardPile().getCardCollection()
-								.get(crazyEight.getDiscardPile().getCardCollection().size() - 1).getSuit());
-						if (crazyEight.getPlayerList().get(crazyEight.turn).getHand().getCardCollection().size() == 0) {
-							crazyEight.setWinner(crazyEight.turn);
+					if (view.crazyEight.getPlayerList().get(view.crazyEight.turn).getPlayableCards().getCardCollection().size()!=0) {
+						view.crazyEight.setCurrentRank(view.crazyEight.getDiscardPile().getCardCollection()
+								.get(view.crazyEight.getDiscardPile().getCardCollection().size() - 1).getRank());
+						view.crazyEight.setCurrentSuit(view.crazyEight.getDiscardPile().getCardCollection()
+								.get(view.crazyEight.getDiscardPile().getCardCollection().size() - 1).getSuit());
+						if (view.crazyEight.getPlayerList().get(view.crazyEight.turn).getHand().getCardCollection().size() == 0) {
+							view.crazyEight.setWinner(view.crazyEight.turn);
 							System.out.println("The game is over, winner is "
-									+ crazyEight.getPlayerList().get(crazyEight.getWinner()).toString() + "!");
+									+ view.crazyEight.getPlayerList().get(view.crazyEight.getWinner()).toString() + "!");
 							break;
 						} else {
-							Card playedCard = new Card(crazyEight.getCurrentSuit(), crazyEight.getCurrentRank());
-							crazyEight.getPlayerList().get(crazyEight.turn).setPlayableCards(new CardCollection());
-							if(crazyEight.getSelectedVariation() == 0) {
-							crazyEight.activateEffect(playedCard);
+							Card playedCard = new Card(view.crazyEight.getCurrentSuit(), view.crazyEight.getCurrentRank());
+							view.crazyEight.getPlayerList().get(view.crazyEight.turn).setPlayableCards(new CardCollection());
+							if(view.crazyEight.getSelectedVariation() == 0) {
+								view.crazyEight.activateEffect(playedCard);
 							//crazyEight.playerList.get(crazyEight.turn).setPlayableCards(new CardCollection());
 							}
 							
@@ -46,20 +45,20 @@ public class Main {
 					}
 				} else {
 					System.out.println("----------------------------No more card----------------------------");
-					crazyEight.getDrawPile().getCardCollection().addAll(crazyEight.getDiscardPile().getCardCollection());
-					crazyEight.getDiscardPile().getCardCollection().clear();
+					view.crazyEight.getDrawPile().getCardCollection().addAll(view.crazyEight.getDiscardPile().getCardCollection());
+					view.crazyEight.getDiscardPile().getCardCollection().clear();
 					Card newCard = new Card();
-					newCard = crazyEight.getDrawPile().getCardCollection().get(crazyEight.getDrawPile().getCardCollection().size() - 1);
-					crazyEight.getDiscardPile().getCardCollection().add(newCard);
-					crazyEight.getDrawPile().removeCard(crazyEight.getDrawPile().getCardCollection().size() - 1);
-					crazyEight.turn--;
+					newCard = view.crazyEight.getDrawPile().getCardCollection().get(view.crazyEight.getDrawPile().getCardCollection().size() - 1);
+					view.crazyEight.getDiscardPile().getCardCollection().add(newCard);
+					view.crazyEight.getDrawPile().removeCard(view.crazyEight.getDrawPile().getCardCollection().size() - 1);
+					view.crazyEight.turn--;
 				}
 				//				System.out.println(crazyEight.playerList);
 				//				System.out.println(crazyEight.turn);
 
 			}
-			crazyEight.turn = 0;
-		}
+			view.crazyEight.turn = 0;
+		}*/
 
 		// crazyEight.playerList.get(1).playGame(crazyEight.drawPile,
 		// crazyEight.discardPile, crazyEight.currentRank, crazyEight.currentSuit);

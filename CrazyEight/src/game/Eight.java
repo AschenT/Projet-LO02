@@ -5,6 +5,7 @@ import java.util.*;
 import card.Card;
 import card.CardCollection;
 import player.*;
+import strategy.Difficulty;
 
 public class Eight implements GlobalInformation {
 	private int playerQuantitie = 0;
@@ -27,12 +28,16 @@ public class Eight implements GlobalInformation {
 	public Eight() {
 		// initialisation des joueurs, enregistres dans playerList afin de mieux
 		// controler le jeux
+		
+
+	}
+	public void demarrerConsole(Difficulty difficulty) {
 		this.setPlayerList(new <Player>ArrayList());
-		selectedVariation = choixVariante();
+		//selectedVariation = choixVariante();
 
 
 		//TODO limiter 4 joueurs
-		this.playerQuantitie = saisirNombreJoueur();
+		//this.playerQuantitie = saisirNombreJoueur();
 
 		for (int i = 0; i < this.playerQuantitie; i++) {
 			HumainPlayer newHumainPlayer = new HumainPlayer();
@@ -40,18 +45,44 @@ public class Eight implements GlobalInformation {
 		}
 		
 		// instancier un joueur AI
-		this.computerQuantitie = saisirNombreOrdi();
+		//this.computerQuantitie = saisirNombreOrdi();
 
 		for (int i = 0; i < this.computerQuantitie; i++) {
-			AIPlayer newaiPlayer = new AIPlayer();
+			AIPlayer newaiPlayer = new AIPlayer(difficulty);
 			this.getPlayerList().add(newaiPlayer);
 		}
 
 
 		this.setDrawPile(new CardCollection());
 		this.setDiscardPile(new CardCollection());
-
+		startGame();
+		tourDeJeu();
 	}
+public void demarrerInterface(){	
+	this.setPlayerList(new <Player>ArrayList());
+	//selectedVariation = choixVariante();
+
+
+	//TODO limiter 4 joueurs
+	//this.playerQuantitie = saisirNombreJoueur();
+
+	for (int i = 0; i < this.playerQuantitie; i++) {
+		HumainPlayer newHumainPlayer = new HumainPlayer();
+		this.getPlayerList().add(newHumainPlayer);
+	}
+	
+	// instancier un joueur AI
+	//this.computerQuantitie = saisirNombreOrdi();
+
+	for (int i = 0; i < this.computerQuantitie; i++) {
+		AIPlayer newaiPlayer = new AIPlayer();
+		this.getPlayerList().add(newaiPlayer);
+	}
+
+
+	this.setDrawPile(new CardCollection());
+	this.setDiscardPile(new CardCollection());
+}
 	
 	public int choixVariante() {
 		System.out.println("Quelle variante souhaitez-vous?");
@@ -78,6 +109,7 @@ public class Eight implements GlobalInformation {
 		
 		return nombre;
 	}
+	
 	
 	public int saisirNombreOrdi() {
 		Scanner sc = new Scanner(System.in);
@@ -151,6 +183,53 @@ public class Eight implements GlobalInformation {
 		 */
 		public void skipNextPlayerTurn() {
 			this.turn++;
+		}
+		public void tourDeJeu() {
+			setTurn(0);
+			setWinner(-1);
+			while (getWinner() == -1) {
+				for (setTurn(0); getTurn() < getPlayerList().size();turn++) {
+					if (getDrawPile().getCardCollection().size() >= 5) {
+						getPlayerList().get(turn).playGame(getDrawPile(), getDiscardPile(),
+								getCurrentRank(), getCurrentSuit());
+						
+						if (getPlayerList().get(turn).getPlayableCards().getCardCollection().size()!=0) {
+							setCurrentRank(getDiscardPile().getCardCollection()
+									.get(getDiscardPile().getCardCollection().size() - 1).getRank());
+							setCurrentSuit(getDiscardPile().getCardCollection()
+									.get(getDiscardPile().getCardCollection().size() - 1).getSuit());
+							if (getPlayerList().get(turn).getHand().getCardCollection().size() == 0) {
+								setWinner(turn);
+								System.out.println("The game is over, winner is "
+										+ getPlayerList().get(getWinner()).toString() + "!");
+								break;
+							} else {
+								Card playedCard = new Card(getCurrentSuit(), getCurrentRank());
+								getPlayerList().get(turn).setPlayableCards(new CardCollection());
+								if(getSelectedVariation() == 0) {
+									activateEffect(playedCard);
+								//crazyEight.playerList.get(crazyEight.turn).setPlayableCards(new CardCollection());
+								}
+								
+
+							}
+						}
+					} else {
+						System.out.println("----------------------------No more card----------------------------");
+						getDrawPile().getCardCollection().addAll(getDiscardPile().getCardCollection());
+						getDiscardPile().getCardCollection().clear();
+						Card newCard = new Card();
+						newCard = getDrawPile().getCardCollection().get(getDrawPile().getCardCollection().size() - 1);
+						getDiscardPile().getCardCollection().add(newCard);
+						getDrawPile().removeCard(getDrawPile().getCardCollection().size() - 1);
+						turn--;
+					}
+					//				System.out.println(crazyEight.playerList);
+					//				System.out.println(crazyEight.turn);
+
+				}
+				turn = 0;
+			}
 		}
 
 		/*
@@ -340,4 +419,5 @@ public class Eight implements GlobalInformation {
 		public static void setSelectedVariation(int selectedVariation) {
 			Eight.selectedVariation = selectedVariation;
 		}
+
 	}

@@ -11,8 +11,19 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+
+import Controleur.MenuControleur;
+import game.Eight;
+import strategy.Difficulty;
+import strategy.Easy;
+import strategy.Hard;
+
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 
 public class Interface {
@@ -29,31 +40,16 @@ public class Interface {
 	private JLabel lblVariante;
 	private JRadioButton rdbtnAvecEffet;
 	private JRadioButton rdbtnSansEffet;
+	private MenuControleur controleur;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Interface window = new Interface();
-					window.getFrame().setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public Interface() {
+	public Interface(MenuControleur mc) {
 		initialize();
+		controleur = mc;
 	}
 
 	/**
@@ -62,68 +58,156 @@ public class Interface {
 	private void initialize() {
 		setFrame(new JFrame());
 		getFrame().setBounds(100, 100, 450, 300);
-		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getFrame().getContentPane().setLayout(null);
-		
+
 		nombreJoueur = new JTextField();
+		nombreJoueur.addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				checkSelection();
+			}
+		});
 		nombreJoueur.setBounds(12, 42, 116, 22);
 		getFrame().getContentPane().add(nombreJoueur);
 		nombreJoueur.setColumns(10);
-		
+
 		nombreOrdi = new JTextField();
+		nombreOrdi.addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				checkSelection();
+			}
+		});
 		nombreOrdi.setBounds(12, 123, 116, 22);
 		getFrame().getContentPane().add(nombreOrdi);
 		nombreOrdi.setColumns(10);
-		
+
 		btnValider = new JButton("Valider");
+		btnValider.setEnabled(false);
+		btnValider.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				getFrame().dispose();
+				controleur.startGame();
+
+			}
+		});
 		btnValider.setBounds(270, 188, 97, 25);
 		getFrame().getContentPane().add(btnValider);
-		
+
 		lblNombreDeJoueurs = new JLabel("Nombre de Joueurs");
 		lblNombreDeJoueurs.setBounds(12, 13, 116, 22);
 		getFrame().getContentPane().add(lblNombreDeJoueurs);
-		
+
 		lblNombreDordinateur = new JLabel("Nombre d'ordinateur");
 		lblNombreDordinateur.setBounds(12, 88, 143, 22);
 		getFrame().getContentPane().add(lblNombreDordinateur);
-		
+
 		rdbtnMedium = new JRadioButton("Medium");
 		buttonGroup_1.add(rdbtnMedium);
 		rdbtnMedium.setBounds(12, 202, 127, 25);
 		getFrame().getContentPane().add(rdbtnMedium);
-		
+		rdbtnMedium.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				checkSelection();
+				
+			}
+			
+		});
+			
 		rdbtnEasy = new JRadioButton("Easy");
 		buttonGroup_1.add(rdbtnEasy);
 		rdbtnEasy.setBounds(12, 172, 127, 25);
 		getFrame().getContentPane().add(rdbtnEasy);
-		
+		rdbtnEasy.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				checkSelection();
+				
+			}
+			
+		});
+
 		lblJoueursMaximum = new JLabel("4 Joueurs Maximum!");
 		lblJoueursMaximum.setBounds(216, 18, 148, 52);
 		getFrame().getContentPane().add(lblJoueursMaximum);
-		
+
 		lblVariante = new JLabel("Variante");
 		lblVariante.setBounds(226, 83, 79, 22);
 		getFrame().getContentPane().add(lblVariante);
-		
+
 		rdbtnAvecEffet = new JRadioButton("Avec effet");
 		buttonGroup.add(rdbtnAvecEffet);
 		rdbtnAvecEffet.setBounds(216, 114, 127, 25);
 		getFrame().getContentPane().add(rdbtnAvecEffet);
-		
+		rdbtnAvecEffet.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				checkSelection();
+				
+			}
+			
+		});
+
 		rdbtnSansEffet = new JRadioButton("Sans effet");
 		buttonGroup.add(rdbtnSansEffet);
 		rdbtnSansEffet.setBounds(216, 144, 127, 25);
 		getFrame().getContentPane().add(rdbtnSansEffet);
+		rdbtnAvecEffet.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				checkSelection();
+				
+			}
+			
+		});
 	}
+
 	public int getNombreJoueur() {
-		return Integer.parseInt(nombreJoueur.getText());
+		if (Integer.parseInt(nombreJoueur.getText()) >= 1 && Integer.parseInt(nombreJoueur.getText()) < 4) {
+			return Integer.parseInt(nombreJoueur.getText());
+		} else {
+			return 0;
+		}
 	}
+
 	public int getNombreOrdi() {
-		return Integer.parseInt(nombreOrdi.getText());
+		if (Integer.parseInt(nombreOrdi.getText()) >= 0
+				&& Integer.parseInt(nombreJoueur.getText()) + Integer.parseInt(nombreOrdi.getText()) < 4) {
+			return Integer.parseInt(nombreOrdi.getText());
+		} else {
+			return 0;
+		}
 	}
-	public void addValidationListener(ActionListener listenerForValiderButton) {
-		btnValider.addActionListener(listenerForValiderButton);
+
+	public int getVariante() {
+		if (rdbtnSansEffet.isSelected()) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
+
+	public Difficulty getDifficulty() {
+		if (rdbtnMedium.isSelected()) {
+			return new Hard();
+		} else {
+			return new Easy();
+		}
+	}
+
+	public void checkSelection() {
+		// verifier les deux chaps de textes et les deux groupes
+		System.out.println("yo");
+		
+		
+	}
+
 	public void displayErrorMessage(String errorMessage) {
 		JOptionPane.showMessageDialog(getFrame(), this, errorMessage, JOptionPane.ERROR_MESSAGE);
 	}
@@ -135,4 +219,5 @@ public class Interface {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+
 }
