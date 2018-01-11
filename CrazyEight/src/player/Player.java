@@ -10,6 +10,7 @@ public class Player implements GlobalInformation
 	private int playerID;
 	private boolean pass = false;
 	protected static int playerQuantitie;
+	protected static int computerQuantitie;
 	protected CardCollection hand;
 	protected CardCollection playableCards;
 	
@@ -30,7 +31,7 @@ public class Player implements GlobalInformation
 	{
 		playerQuantitie++;
 		this.name = ai;
-		this.playerID = this.playerQuantitie;
+		this.playerID = this.playerQuantitie+this.computerQuantitie;
 		this.hand = new CardCollection();
 		this.playableCards =new CardCollection();
 	}

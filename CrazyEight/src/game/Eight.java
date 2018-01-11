@@ -94,7 +94,18 @@ public class Eight implements GlobalInformation {
 			// this.drawPile.showCardCollection();
 
 			// distribution des cartes
-			for (int id = 0; id < this.playerQuantitie + 1; id++) {
+			for (int id = 0; id < this.playerQuantitie; id++) {
+				for (int nb_cards = 0; nb_cards < 8; nb_cards++)////////////////////////////////////////////////////////////////////////////////////////////////////////
+				{
+					Card newCard = new Card();
+					// newCard = this.drawPile.cardCollection.get(nb_cards);//on distribue toujours
+					// la premiere carte de drawPile
+					newCard = this.drawPile.getCardCollection().get(0);
+					this.playerList.get(id).getHand().addCard(newCard);
+					this.drawPile.removeCard(0);
+				}
+			}
+			for (int id = this.playerQuantitie; id < this.playerQuantitie + this.computerQuantitie; id++) {
 				for (int nb_cards = 0; nb_cards < 8; nb_cards++)////////////////////////////////////////////////////////////////////////////////////////////////////////
 				{
 					Card newCard = new Card();
