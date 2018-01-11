@@ -13,12 +13,6 @@ public class Easy implements Difficulty {
 		int n=1;
 		int cardDrawn=0;
 		int indexDiscardCard = -1;
-		System.out.println("----------------------------Here's ai's hand cards----------------------------");
-		ai.getHand().showCardCollection();
-		System.out.println("Current Rank:");
-		System.out.println(GlobalInformation.ranks[currentRank]);
-		System.out.println("Current Suit:");
-		System.out.println(GlobalInformation.suits[currentSuit]);
 		
 		//afficher toutes les cartes jouables s'ils existent et leurs numeros correspondants dans le Handcard sinon piocher une carte
 		System.out.println("----------------------------AI's turn----------------------------");

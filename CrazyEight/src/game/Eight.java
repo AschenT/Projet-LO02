@@ -322,10 +322,10 @@ public void demarrerInterface(){
 					System.out.println("The suit is now " + Eight.getCurrentSuit() + ".");
 				} else {
 					System.out.println("Type the number matching the suit you want");
-					System.out.println("1---------->clubs");
-					System.out.println("2---------->spades");
-					System.out.println("3---------->diamonds");
-					System.out.println("4---------->hearts");
+					System.out.println("1|clubs");
+					System.out.println("2|spades");
+					System.out.println("3|diamonds");
+					System.out.println("4|hearts");
 					Scanner sc = new Scanner(System.in);
 					Eight.setCurrentSuit(sc.nextInt());
 					System.out.println("The suit is now " + GlobalInformation.suits[Eight.getCurrentSuit()] + ".");
@@ -357,7 +357,7 @@ public void demarrerInterface(){
 				} else {
 					System.out.println("Type the number matching the player you want to draw a card");
 					for (int i = 0; i < getPlayerList().size(); i++) {
-						System.out.println(i + "---------->" + getPlayerList().get(i).getName());
+						System.out.println(i + "|" + getPlayerList().get(i).getName());
 					}
 					Scanner sc1 = new Scanner(System.in);
 					int playerToDraw = sc1.nextInt();

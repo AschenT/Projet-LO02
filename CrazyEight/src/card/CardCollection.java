@@ -38,7 +38,7 @@ public class CardCollection
 		
 		for(int i=0;i<this.getCardCollection().size();i++)
 		{
-			System.out.println(i+"--->"+this.getCardCollection().get(i).toString());
+			System.out.println(i+"|"+this.getCardCollection().get(i).toString());
 			
 		}		
 	}

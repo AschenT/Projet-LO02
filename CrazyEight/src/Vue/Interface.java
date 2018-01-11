@@ -24,6 +24,7 @@ import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.InputMismatchException;
 import java.awt.event.ActionEvent;
 
 public class Interface {
@@ -41,6 +42,7 @@ public class Interface {
 	private JRadioButton rdbtnAvecEffet;
 	private JRadioButton rdbtnSansEffet;
 	private MenuControleur controleur;
+	private int totalJoueur;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -112,11 +114,11 @@ public class Interface {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				checkSelection();
-				
+
 			}
-			
+
 		});
-			
+
 		rdbtnEasy = new JRadioButton("Easy");
 		buttonGroup_1.add(rdbtnEasy);
 		rdbtnEasy.setBounds(12, 172, 127, 25);
@@ -126,9 +128,9 @@ public class Interface {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				checkSelection();
-				
+
 			}
-			
+
 		});
 
 		lblJoueursMaximum = new JLabel("4 Joueurs Maximum!");
@@ -148,23 +150,21 @@ public class Interface {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				checkSelection();
-				
 			}
-			
 		});
 
 		rdbtnSansEffet = new JRadioButton("Sans effet");
 		buttonGroup.add(rdbtnSansEffet);
 		rdbtnSansEffet.setBounds(216, 144, 127, 25);
 		getFrame().getContentPane().add(rdbtnSansEffet);
-		rdbtnAvecEffet.addItemListener(new ItemListener() {
+		rdbtnSansEffet.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				checkSelection();
-				
+
 			}
-			
+
 		});
 	}
 
@@ -201,11 +201,64 @@ public class Interface {
 		}
 	}
 
+	public boolean checkChampJoueur() {
+		try {
+			int a;
+			if(nombreJoueur.getText().equals("")) 
+			 return false;
+			else
+				a = Integer.parseInt(nombreJoueur.getText());
+		}
+		
+		catch(NumberFormatException e) {
+			System.out.println("Vous devez rentrez un nombre");
+			return false;
+		}
+		return true;
+	}
+
+	public boolean checkChampOrdi() {
+		try {
+			int a;
+			if(nombreOrdi.getText().equals("")) 
+			 return false;
+			else
+				a = Integer.parseInt(nombreOrdi.getText());
+		}
+		
+		catch(NumberFormatException e) {
+			System.out.println("Vous devez rentrez un nombre");
+			return false;
+		}
+		return true;
+	}
+
+	public boolean checkChampDifficulte() {
+		if (rdbtnEasy.isSelected() || rdbtnMedium.isSelected()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean checkChampVariante() {
+		if (rdbtnSansEffet.isSelected() || rdbtnAvecEffet.isSelected()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public void checkSelection() {
 		// verifier les deux chaps de textes et les deux groupes
-		System.out.println("yo");
-		
-		
+		if (checkChampDifficulte() && checkChampJoueur() && checkChampOrdi() && checkChampVariante()) {
+			totalJoueur = getNombreJoueur() + getNombreOrdi();
+			if(totalJoueur<=4 && totalJoueur>=2)
+			btnValider.setEnabled(true);
+		}else {
+			btnValider.setEnabled(false);
+		}
 	}
 
 	public void displayErrorMessage(String errorMessage) {

@@ -36,7 +36,7 @@ public class HumainPlayer extends Player
 				if(((this.hand.getCardCollection().get(i).getRank()==currentRank)||(this.hand.getCardCollection().get(i).getSuit()==currentSuit))&&(getPlayableCards().getCardCollection().contains(this.hand.getCardCollection().get(i))==false))
 				{
 					getPlayableCards().addCard(this.hand.getCardCollection().get(i));
-					System.out.println(i+"--->"+this.hand.getCardCollection().get(i).toString());
+					System.out.println(i+"|"+this.hand.getCardCollection().get(i).toString());
 				}
 			}
 			//S'il y a pas de carte jouables, il faut piocher une carte 
