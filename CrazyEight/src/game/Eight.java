@@ -17,12 +17,13 @@ public class Eight implements GlobalInformation {
 	private List<Player> playerList;
 	private int turn;
 	private int winner;
-	private static Variation selectedVariation;
+	private static int selectedVariation;
 
 	public Eight() {
 		// initialisation des joueurs, enregistres dans playerList afin de mieux
 		// controler le jeux
 		this.playerList = new <Player>ArrayList();
+		selectedVariation = choixVariante();
 
 
 		//TODO limiter 4 joueurs
@@ -45,6 +46,15 @@ public class Eight implements GlobalInformation {
 		this.drawPile = new CardCollection();
 		this.discardPile = new CardCollection();
 
+	}
+	
+	public int choixVariante() {
+		System.out.println("Quelle variante souhaitez-vous?");
+		System.out.println("0------>Avec Effet");
+		System.out.println("1------>Sans Effet");
+		Scanner sc = new Scanner(System.in);
+		int variante = sc.nextInt();
+		return variante;
 	}
 
 	public int saisirNombreJoueur() {
@@ -177,8 +187,10 @@ public class Eight implements GlobalInformation {
 							} else {
 								Card playedCard = new Card(getCurrentSuit(), currentRank);
 								crazyEight.playerList.get(crazyEight.turn).setPlayableCards(new CardCollection());
+								if(selectedVariation == 0) {
 								crazyEight.activateEffect(playedCard);
 								//crazyEight.playerList.get(crazyEight.turn).setPlayableCards(new CardCollection());
+								}
 								
 
 							}
