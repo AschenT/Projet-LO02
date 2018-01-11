@@ -8,6 +8,7 @@ import player.*;
 
 public class Eight implements GlobalInformation {
 	private int playerQuantitie;
+	private int computerQuantitie;
 	private CardCollection drawPile;
 	private CardCollection discardPile;
 
@@ -23,7 +24,6 @@ public class Eight implements GlobalInformation {
 		// controler le jeux
 		this.playerList = new <Player>ArrayList();
 
-		// sc.useDelimiter(";");
 
 		//TODO limiter 4 joueurs
 		this.playerQuantitie = saisirNombreJoueur();
@@ -32,9 +32,15 @@ public class Eight implements GlobalInformation {
 			HumainPlayer newHumainPlayer = new HumainPlayer();
 			this.playerList.add(newHumainPlayer);
 		}
+		
 		// instancier un joueur AI
-		AIPlayer aiPlayer = new AIPlayer();
-		this.playerList.add(aiPlayer);
+		this.computerQuantitie = saisirNombreOrdi();
+
+		for (int i = 0; i < this.computerQuantitie; i++) {
+			AIPlayer newaiPlayer = new AIPlayer();
+			this.playerList.add(newaiPlayer);
+		}
+
 
 		this.drawPile = new CardCollection();
 		this.discardPile = new CardCollection();
@@ -44,8 +50,7 @@ public class Eight implements GlobalInformation {
 	public int saisirNombreJoueur() {
 		Scanner sc = new Scanner(System.in);
 		// Instancier les joueurs humains
-		System.out.println("How many people play against computer?"/* Tape a number terminate with ; 
-		and press enter" */);
+		System.out.println("How many people play against computer?");
 		int nombre = 0;
 		try {
 			nombre = sc.nextInt();
@@ -55,6 +60,24 @@ public class Eight implements GlobalInformation {
 			System.out.println("Vous devez rentrez un nombre");
 			saisirNombreJoueur();
 		}
+		
+		return nombre;
+	}
+	
+	public int saisirNombreOrdi() {
+		Scanner sc = new Scanner(System.in);
+		// Instancier les Ordi
+		System.out.println("How many computers?");
+		int nombre = 0;
+		try {
+			nombre = sc.nextInt();
+		}
+		
+		catch(InputMismatchException exception) {
+			System.out.println("Vous devez rentrez un nombre");
+			saisirNombreOrdi();
+		}
+		
 		return nombre;
 	}
 
