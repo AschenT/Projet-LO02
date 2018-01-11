@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
@@ -40,7 +41,7 @@ public class Interface {
 			public void run() {
 				try {
 					Interface window = new Interface();
-					window.frame.setVisible(true);
+					window.getFrame().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,63 +60,79 @@ public class Interface {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		setFrame(new JFrame());
+		getFrame().setBounds(100, 100, 450, 300);
+		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrame().getContentPane().setLayout(null);
 		
 		nombreJoueur = new JTextField();
 		nombreJoueur.setBounds(12, 42, 116, 22);
-		frame.getContentPane().add(nombreJoueur);
+		getFrame().getContentPane().add(nombreJoueur);
 		nombreJoueur.setColumns(10);
 		
 		nombreOrdi = new JTextField();
 		nombreOrdi.setBounds(12, 123, 116, 22);
-		frame.getContentPane().add(nombreOrdi);
+		getFrame().getContentPane().add(nombreOrdi);
 		nombreOrdi.setColumns(10);
 		
 		btnValider = new JButton("Valider");
-		btnValider.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		btnValider.setBounds(270, 188, 97, 25);
-		frame.getContentPane().add(btnValider);
+		getFrame().getContentPane().add(btnValider);
 		
 		lblNombreDeJoueurs = new JLabel("Nombre de Joueurs");
 		lblNombreDeJoueurs.setBounds(12, 13, 116, 22);
-		frame.getContentPane().add(lblNombreDeJoueurs);
+		getFrame().getContentPane().add(lblNombreDeJoueurs);
 		
 		lblNombreDordinateur = new JLabel("Nombre d'ordinateur");
 		lblNombreDordinateur.setBounds(12, 88, 143, 22);
-		frame.getContentPane().add(lblNombreDordinateur);
+		getFrame().getContentPane().add(lblNombreDordinateur);
 		
 		rdbtnMedium = new JRadioButton("Medium");
 		buttonGroup_1.add(rdbtnMedium);
 		rdbtnMedium.setBounds(12, 202, 127, 25);
-		frame.getContentPane().add(rdbtnMedium);
+		getFrame().getContentPane().add(rdbtnMedium);
 		
 		rdbtnEasy = new JRadioButton("Easy");
 		buttonGroup_1.add(rdbtnEasy);
 		rdbtnEasy.setBounds(12, 172, 127, 25);
-		frame.getContentPane().add(rdbtnEasy);
+		getFrame().getContentPane().add(rdbtnEasy);
 		
 		lblJoueursMaximum = new JLabel("4 Joueurs Maximum!");
 		lblJoueursMaximum.setBounds(216, 18, 148, 52);
-		frame.getContentPane().add(lblJoueursMaximum);
+		getFrame().getContentPane().add(lblJoueursMaximum);
 		
 		lblVariante = new JLabel("Variante");
 		lblVariante.setBounds(226, 83, 79, 22);
-		frame.getContentPane().add(lblVariante);
+		getFrame().getContentPane().add(lblVariante);
 		
 		rdbtnAvecEffet = new JRadioButton("Avec effet");
 		buttonGroup.add(rdbtnAvecEffet);
 		rdbtnAvecEffet.setBounds(216, 114, 127, 25);
-		frame.getContentPane().add(rdbtnAvecEffet);
+		getFrame().getContentPane().add(rdbtnAvecEffet);
 		
 		rdbtnSansEffet = new JRadioButton("Sans effet");
 		buttonGroup.add(rdbtnSansEffet);
 		rdbtnSansEffet.setBounds(216, 144, 127, 25);
-		frame.getContentPane().add(rdbtnSansEffet);
+		getFrame().getContentPane().add(rdbtnSansEffet);
+	}
+	public int getNombreJoueur() {
+		return Integer.parseInt(nombreJoueur.getText());
+	}
+	public int getNombreOrdi() {
+		return Integer.parseInt(nombreOrdi.getText());
+	}
+	public void addValidationListener(ActionListener listenerForValiderButton) {
+		btnValider.addActionListener(listenerForValiderButton);
+	}
+	public void displayErrorMessage(String errorMessage) {
+		JOptionPane.showMessageDialog(getFrame(), this, errorMessage, JOptionPane.ERROR_MESSAGE);
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 }
