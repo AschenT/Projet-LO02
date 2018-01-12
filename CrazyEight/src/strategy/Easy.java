@@ -24,7 +24,7 @@ public class Easy implements Difficulty {
 				if((ai.getHand().getCardCollection().get(i).getRank()==currentRank)||(ai.getHand().getCardCollection().get(i).getSuit()==currentSuit))
 				{
 					ai.getPlayableCards().addCard(ai.getHand().getCardCollection().get(i));
-					System.out.println(i+"--->"+ai.getHand().getCardCollection().get(i).toString());
+				//	System.out.println(i+"--->"+ai.getHand().getCardCollection().get(i).toString());
 					indexDiscardCard = i;
 				}
 			}
@@ -37,7 +37,7 @@ public class Easy implements Difficulty {
 				newCard = drawPile.getCardCollection().get(0);
 				ai.getHand().addCard(newCard);
 				drawPile.removeCard(0);
-				System.out.println(newCard.toString());
+				//System.out.println(newCard.toString());
 				cardDrawn=1;
 			}
 			n--;

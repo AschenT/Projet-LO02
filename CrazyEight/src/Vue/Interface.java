@@ -178,7 +178,7 @@ public class Interface {
 
 	public int getNombreOrdi() {
 		if (Integer.parseInt(nombreOrdi.getText()) >= 0
-				&& Integer.parseInt(nombreJoueur.getText()) + Integer.parseInt(nombreOrdi.getText()) < 4) {
+				&& Integer.parseInt(nombreJoueur.getText()) + Integer.parseInt(nombreOrdi.getText()) <= 4) {
 			return Integer.parseInt(nombreOrdi.getText());
 		} else {
 			return 0;

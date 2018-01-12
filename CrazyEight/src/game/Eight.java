@@ -245,11 +245,13 @@ public void demarrerInterface(){
 		}
 
 
-		public int getIndexOfAI() {
-			int k = 0;
+		public int[] getIndexOfAI() {
+			int[] k = new int[getComputerQuantitie()];
+			int a = 0;
 			for (int i = 0; i < getPlayerList().size(); i++) {
 				if (getPlayerList().get(i).getName() == "ai")
-					k = i;
+					k[a] = i;
+					a=a+1;
 			}
 			return k;
 		}
@@ -315,11 +317,11 @@ public void demarrerInterface(){
 				turn--;
 				break;
 			case 8:
-				if (turn == getIndexOfAI()) {
+				if (getPlayerList().get(turn).getName() == "ai"){
 					Random r = new Random();
 					int valeur = 1 + r.nextInt(4);
 					Eight.setCurrentSuit(valeur);
-					System.out.println("The suit is now " + Eight.getCurrentSuit() + ".");
+					System.out.println("The suit is now " + GlobalInformation.suits[Eight.getCurrentSuit()] + ".");
 				} else {
 					System.out.println("Type the number matching the suit you want");
 					System.out.println("1|clubs");
@@ -345,7 +347,7 @@ public void demarrerInterface(){
 				;
 				break;
 			case 5:
-				if (turn == getIndexOfAI()) {
+				if (getPlayerList().get(turn).getName() == "ai") {
 					Random r1 = new Random();
 					int resultat = r1.nextInt(getPlayerList().size());
 					Card newCard = new Card();
@@ -418,6 +420,14 @@ public void demarrerInterface(){
 
 		public static void setSelectedVariation(int selectedVariation) {
 			Eight.selectedVariation = selectedVariation;
+		}
+		public boolean contient(int[] T, int a) {
+			for(int i=0;i<T.length;i++) {
+				if(a==T[i]) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 	}
