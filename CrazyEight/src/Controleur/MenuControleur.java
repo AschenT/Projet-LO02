@@ -18,7 +18,7 @@ public class MenuControleur {
 		}
 		
 	public void startGame() {
-		int nombreJoueur, nombreOrdi = 0;
+		int nombreJoueur, nombreOrdi, variante = 0;
 		try {
 			nombreJoueur = view.getNombreJoueur();
 			model.setPlayerQuantitie(nombreJoueur);
@@ -27,6 +27,9 @@ public class MenuControleur {
 			model.setComputerQuantitie(nombreOrdi);
 			
 			Difficulty difficulty = view.getDifficulty();
+			
+			variante = view.getVariante();
+			model.setSelectedVariation(variante);
 
 			
 			model.demarrerConsole(difficulty);
