@@ -322,6 +322,7 @@ public void demarrerInterface(){
 					int valeur = 1 + r.nextInt(4);
 					Eight.setCurrentSuit(valeur);
 					System.out.println("The suit is now " + GlobalInformation.suits[Eight.getCurrentSuit()] + ".");
+					break;
 				} else {
 					System.out.println("Type the number matching the suit you want");
 					System.out.println("1|clubs");
